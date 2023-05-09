@@ -1,0 +1,24 @@
+{
+  "name": "Page Capture",
+  "description": "A full page capture google chrome extension. This extension will help us to take full page screenshot.",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Page Capture",
+    "default_icon": {
+      "16": "icon.png",
+      "24": "icon.png",
+      "32": "icon.png"
+    }
+  },
+  "icons": {
+    "128": "icon.png",
+    "16": "icon.png",
+    "256": "icon.png",
+    "48": "icon.png"
+  },
+  "permissions": ["activeTab"],
+  "background": {
+    "service_worker": "src/background.ts"
+  }
+}
