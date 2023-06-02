@@ -1,8 +1,13 @@
 chrome.runtime.onMessage.addListener(
   async (request: any, sender: any, sendResponse: any) => {
     if (request.action === "cupturePage") {
-      const { height, width }: any = await capturePageDimensions();
-      sendResponse({ height, width });
+      try {
+        const pageDimension = await capturePageDimensions();
+        sendResponse(pageDimension);
+      } catch (error) {
+        console.log("Error is eccurd!", error);
+        sendResponse(null);
+      }
     }
   }
 );
@@ -10,7 +15,19 @@ chrome.runtime.onMessage.addListener(
 const capturePageDimensions = async () => {
   const { scrollHeight, clientHeight } = document.documentElement;
   let height = scrollHeight;
-  console.log(scrollHeight, clientHeight);
+  let currentScroll: number = 0;
+  let cuptureHeight = clientHeight;
+
+  while (currentScroll + cuptureHeight < height) {
+    window.scrollTo(0, currentScroll + cuptureHeight);
+    await wait(200); // Adjust the delay between scrolls if needed
+    currentScroll += cuptureHeight;
+
+    height = document.documentElement.scrollHeight;
+
+    cuptureHeight = Math.min(clientHeight, height - cuptureHeight);
+  }
+  return { height, width: document.documentElement.clientWidth };
   // return new Promise((resolve) => {
   //   const body = document.body;
   //   const html = document.documentElement;
