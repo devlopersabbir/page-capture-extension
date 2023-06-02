@@ -6,11 +6,11 @@ chrome.action.onClicked.addListener(async (tab: any) => {
     type: "basic",
     iconUrl: "icon.png",
     title: "Screenshot Finished",
-    message: `Captured dimensions: `,
+    message: `Captured dimensions:`,
   });
   // for taken a screnshot
   chrome.tabs.captureVisibleTab({ format: "png" }, (screenshotURL) => {
-    console.log(screenshotURL);
+    console.log("url got it");
   });
 
   // send a notification to make sure screenshot is created
